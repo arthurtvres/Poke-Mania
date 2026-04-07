@@ -1,0 +1,54 @@
+.pokemon-type {
+    font-weight: bold;
+    color: #003e6a;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-card {
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.card-img-top {
+    height: 150px;
+    object-fit: contain;
+}
+
+.pokemon-card img {
+    background-color: #f7f7f8;
+    padding: 10px;
+}
+
+.pokemon-type {
+    font-weight: 500;
+}
+
+.card-action {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.icon-btn {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.icon-btn.favorite {
+    color: red;
+}
+
+.icon-btn.team {
+    color: #007bff;
+}
+
+.icon-btn:hover {
+    transform: scale(1.2);
+}
