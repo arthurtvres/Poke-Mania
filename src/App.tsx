@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react'
 import Header from './components/header/header'
 import Sidebar from './components/sidebar/sidebar'
 import DashboardCards from './components/dashboardCards/dashboardCards'
-import PokemonCard from './components/pokemonCard/pokemonCard'
 import type { IPokemon } from './interfaces/IPokemon'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Pokemons from './pages/Pokemons'
+import MyTeam from './pages/MyTeam'
 
 function App() {
 
@@ -40,7 +40,7 @@ function App() {
 
   async function fetchPokemons() {
     try {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=900')
 
       const data = await response.json()
 
@@ -53,13 +53,14 @@ function App() {
             name: detailData.name,
             image: detailData.sprites.front_default,
             number: detailData.id,
-            type: detailData.types[0].type.name,
+            types: detailData.types.map((type: any) => type.type.name),
           }
         })
       )
 
       setPokemons(pokemonDetails)
       setTotal(pokemonDetails.length)
+      setAnalisados(pokemonDetails.length)
     } catch (error) {
       console.error('Erro ao buscar pokémons:', error)
     }
@@ -100,6 +101,8 @@ function App() {
                     pokemons={pokemons}
                     onFavorite={handleFavorite}
                     onAddToTeam={handleAddToTeam} />} />
+
+                    <Route path="/my-team" element={<MyTeam />} />
             </Routes>
           </section>
 

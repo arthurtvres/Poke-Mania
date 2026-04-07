@@ -20,6 +20,13 @@ function Sidebar() {
             Pokémons
           </Link>
         </li>
+        
+        <li className={location.pathname === '/my-team' ? 'active' : ''}>
+          <Link to="/my-team">
+            <i className="bi bi-people"></i>
+            Meus Times
+          </Link>
+        </li>
       </ul>
     </div>
   )
