@@ -5,29 +5,64 @@ import Header from './components/header/header'
 import Sidebar from './components/sidebar/sidebar'
 import DashboardCards from './components/dashboardCards/dashboardCards'
 import type { IPokemon } from './interfaces/IPokemon'
+import type { ITeam } from './interfaces/ITeam'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Pokemons from './pages/Pokemons'
 import MyTeam from './pages/MyTeam'
+import { fetchPokemons } from './services/pokemonService'
 
+
+// Componente raiz: centraliza estados globais e roteamento da aplicação.
 function App() {
 
   const [total, setTotal] = useState(0)
   const [favoritos, setFavoritos] = useState(0)
-  const [time, setTime] = useState(0)
-  const [analisados, setAnalisados] = useState(0)
+  const [teams, setTeams] = useState<ITeam[]>([])
+  const totalTeams = teams.length
 
-  function handleAddToTeam(isAdd: boolean) {
-    if (isAdd) {
-      if (time >= 6) {
-        alert('Time completo! Remova um Pokémon para adicionar outro.')
-        return
-      }
-      setTime((prev) => prev + 1)
-    } else {
-      setTime((prev) => prev - 1)
+  // Adiciona um pokémon ao time escolhido, respeitando a regra de até 6 por time.
+  function handleAddToTeam(pokemon: IPokemon) {
+    if (teams.length === 0) {
+      alert('Crie um time antes de adicionar pokémons!')
+      return
     }
+
+    // Mostra os times disponíveis para o usuário selecionar onde adicionar o pokémon.
+    const teamNames = teams.map((team, index) => {
+      return `${index + 1} - ${team.name}`
+    }).join('\n')
+
+    const selected = prompt(
+      `Escolha o time para adicionar o pokemon:\n${teamNames}`
+    )
+
+    const teamIndex = Number(selected) - 1
+
+    if (isNaN(teamIndex) || !teams[teamIndex]) {
+      alert('Time inválido.')
+      return
+    }
+    const selectedTeam = teams[teamIndex]
+
+    if (selectedTeam.pokemons.length >= 6) {
+      alert('O time já tem 6 pokémons! Crie outro time para adicionar mais pokémons.')
+      return
+    }
+
+    
+    const updatedTeams = teams.map(team => {
+      if (team.id !== selectedTeam.id) return team
+
+      return {
+        ...team,
+        pokemons: [...team.pokemons, pokemon]
+      }
+    })
+    setTeams(updatedTeams)
   }
 
+
+  // Atualiza o contador global de favoritos ao favoritar ou desfavoritar um pokémon.
   function handleFavorite(isAdd: boolean) {
     if (isAdd) {
       setFavoritos((prev) => prev + 1)
@@ -38,36 +73,19 @@ function App() {
 
   const [pokemons, setPokemons] = useState<IPokemon[]>([])
 
-  async function fetchPokemons() {
-    try {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=900')
-
-      const data = await response.json()
-
-      const pokemonDetails = await Promise.all(
-        data.results.map(async (pokemon: { name: string; url: string }) => {
-          const detailResponse = await fetch(pokemon.url)
-          const detailData = await detailResponse.json()
-
-          return {
-            name: detailData.name,
-            image: detailData.sprites.front_default,
-            number: detailData.id,
-            types: detailData.types.map((type: any) => type.type.name),
-          }
-        })
-      )
-
-      setPokemons(pokemonDetails)
-      setTotal(pokemonDetails.length)
-      setAnalisados(pokemonDetails.length)
-    } catch (error) {
-      console.error('Erro ao buscar pokémons:', error)
-    }
-  }
-
+  // Carrega os pokémons da API ao iniciar o app e atualiza os indicadores do dashboard.
   useEffect(() => {
-    fetchPokemons()
+    async function loadPokemons() {
+      try {
+        const pokemonData = await fetchPokemons()
+        setPokemons(pokemonData)
+        setTotal(pokemonData.length)
+      } catch (error) {
+        console.error('Erro ao buscar pokémons:', error)
+      }
+    }
+
+    loadPokemons()
   }, [])
 
   return (
@@ -88,8 +106,7 @@ function App() {
                   <DashboardCards
                     total={total}
                     favoritos={favoritos}
-                    time={time}
-                    analisados={analisados}
+                    time={totalTeams}
                   />
                 }
               />
@@ -102,7 +119,9 @@ function App() {
                     onFavorite={handleFavorite}
                     onAddToTeam={handleAddToTeam} />} />
 
-                    <Route path="/my-team" element={<MyTeam />} />
+              <Route
+                path="/my-team"
+                element={<MyTeam teams={teams} setTeams={setTeams} />} />
             </Routes>
           </section>
 

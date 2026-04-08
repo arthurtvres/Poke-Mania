@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import './sidebar.css'
 
+// Menu lateral de navegação com destaque automático da rota ativa.
 function Sidebar() {
   const location = useLocation()
 

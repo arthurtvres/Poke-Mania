@@ -1,6 +1,7 @@
 import type { IDashBoardProps } from "../../interfaces/IDashBoardProps"
 
-function DashboardCards({ total, favoritos, time }: IDashBoardProps) {
+// Mostra os principais indicadores resumidos no dashboard.
+function DashboardCards({ total, favoritos, time}: IDashBoardProps) {
     return (
         <div className="row g-3 mb-4">
             <div className="col-12 col-sm-6 col-xl-3">
