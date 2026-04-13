@@ -4,18 +4,20 @@ import type { IPokemonCardProps } from '../../interfaces/IPokemonCardProps'
 import { typeIcons } from '../../utils/typeIcons'
 
 // Exibe um pokémon individual com ações de favoritar e adicionar ao time.
-function PokemonCard({ name, image, types, number, onFavorite, onAddToTeam }: IPokemonCardProps) {
+function PokemonCard({ name, image, types, number, onFavorite, onAddToTeam, isFavorite }: IPokemonCardProps) {
 
-    const [isFavorite, setIsFavorite] = useState(false)
+    
     // Alterna o status de favorito localmente e notifica o componente pai.
     function handleFavoriteClick() {
-        const newValue = !isFavorite
-        setIsFavorite(newValue)
-
-        onFavorite(newValue)
+        onFavorite({
+            name,
+            image,
+            number,
+            types,
+        })
     }
-
     const [inTeam, setInTeam] = useState(false)
+
     // Alterna o estado visual de "no time" e envia os dados do pokémon para inclusão.
     function handleTeamClick() {
         const newValue = !inTeam
@@ -38,25 +40,24 @@ function PokemonCard({ name, image, types, number, onFavorite, onAddToTeam }: IP
             />
 
             <div className="card-body text-center">
-                <h5 className="card-title">{name}</h5>
+                <h5 className="card-title">
+                    {name.charAt(0).toUpperCase() + name.slice(1)}
+                </h5>
                 <p className="card-text text-muted">#{number}</p>
             </div>
 
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">
-                    <div className="d-flex justify-content-center align-items-center ">
+                    <div className="d-flex justify-content-center gap-2 flex-wrap">
                         {types.map((type) => (
-                            <div
-                                key={type}
-                                className="d-flex align-items-center gap-1"
-                            >
+                            <span key={type} className={`type-badge ${type.toLowerCase()}`}>
                                 <img
                                     src={typeIcons[type]}
                                     alt={type}
                                     title={type}
-                                    style={{ width: '38px', height: '38px' }}
                                 />
-                            </div>
+                                {type}
+                            </span>
                         ))}
                     </div>
                 </li>

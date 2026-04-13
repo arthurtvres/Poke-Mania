@@ -6,5 +6,6 @@ export interface IPokemonCardProps {
     types: string[]
     number: number
     onAddToTeam: (pokemon: IPokemon) => void
-    onFavorite: (isAdd: boolean) => void
+    onFavorite: (pokemon: IPokemon) => void
+    isFavorite: boolean
 }

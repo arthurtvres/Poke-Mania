@@ -28,6 +28,21 @@ function Sidebar() {
             Meus Times
           </Link>
         </li>
+
+         <li className={location.pathname === '/favorites' ? 'active' : ''}>
+          <Link to="/favorites">
+            <i className="bi bi-heart"></i>
+            Favoritos
+          </Link>
+        </li>
+
+          <li className={location.pathname === '/who-is-that-pokemon' ? 'active' : ''}>
+            <Link to="/who-is-that-pokemon">
+              <i className="bi bi-question-circle"></i>
+              Quem é esse Pokémon?
+            </Link>
+          </li>
+
       </ul>
     </div>
   )

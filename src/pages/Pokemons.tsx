@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import PokemonCard from '../components/pokemonCard/pokemonCard'
 import type { IPokemon } from '../interfaces/IPokemon'
+import { typeIcons } from '../utils/typeIcons'
 
 interface PokemonsProps {
   pokemons: IPokemon[]
-  onFavorite: (isAdd: boolean) => void
+  favoritePokemons: IPokemon[]
+  onFavorite: (pokemon: IPokemon) => void
   onAddToTeam: (pokemon: IPokemon) => void
 }
 
 // Renderiza catálogo de pokémons com filtros por nome e tipo.
-function Pokemons({ pokemons, onFavorite, onAddToTeam }: PokemonsProps) {
+function Pokemons({ pokemons, onFavorite, onAddToTeam, favoritePokemons }: PokemonsProps) {
   const [search, setSearch] = useState('')
   const [selectedType, setSelectedType] = useState('')
 
@@ -41,32 +43,59 @@ function Pokemons({ pokemons, onFavorite, onAddToTeam }: PokemonsProps) {
       </div>
 
       <div className="col-12 col-md-6 mb-2">
-        <select
-          className="form-select"
-          value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
-        >
-          <option value="">Todos os tipos</option>
-          <option value="grass">Grass</option>
-          <option value="fire">Fire</option>
-          <option value="water">Water</option>
-          <option value="electric">Electric</option>
-          <option value="psychic">Psychic</option>
-          <option value="ice">Ice</option>
-          <option value="dragon">Dragon</option>
-          <option value="dark">Dark</option>
-          <option value="fairy">Fairy</option>
-          <option value="normal">Normal</option>
-          <option value="fighting">Fighting</option>
-          <option value="flying">Flying</option>
-          <option value="poison">Poison</option>
-          <option value="ground">Ground</option>
-          <option value="rock">Rock</option>
-          <option value="bug">Bug</option>
-          <option value="ghost">Ghost</option>
-          <option value="steel">Steel</option>
+        <div className="dropdown">
+          <button
+            className="form-select d-flex align-items-center justify-content-between"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            <div className="d-flex align-items-center gap-2">
+              {selectedType && (
+                <img
+                  src={typeIcons[selectedType]}
+                  alt={selectedType}
+                  title={selectedType}
+                  style={{ width: '24px', height: '24px' }}
+                />
+              )}
+              <span>
+                {selectedType
+                  ? selectedType.charAt(0).toUpperCase() + selectedType.slice(1)
+                  : 'Todos os tipos'}
+              </span>
+            </div>
+          </button>
 
-        </select>
+          <ul className="dropdown-menu w-100">
+            <li>
+              <button
+                type="button"
+                className="dropdown-item"
+                onClick={() => setSelectedType('')}
+              >
+                Todos os tipos
+              </button>
+            </li>
+
+            {Object.keys(typeIcons).map((type) => (
+              <li key={type}>
+                <button
+                  type="button"
+                  className="dropdown-item d-flex align-items-center gap-2"
+                  onClick={() => setSelectedType(type)}
+                >
+                  <img
+                    src={typeIcons[type]}
+                    alt={type}
+                    title={type}
+                    style={{ width: '24px', height: '24px' }}
+                  />
+                  <span>{type.charAt(0).toUpperCase() + type.slice(1)}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
 
@@ -83,6 +112,7 @@ function Pokemons({ pokemons, onFavorite, onAddToTeam }: PokemonsProps) {
               types={pokemon.types}
               onFavorite={onFavorite}
               onAddToTeam={onAddToTeam}
+              isFavorite={favoritePokemons.some((fav) => fav.number === pokemon.number)}
             />
           </div>
         ))}

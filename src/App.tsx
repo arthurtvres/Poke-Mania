@@ -10,15 +10,17 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Pokemons from './pages/Pokemons'
 import MyTeam from './pages/MyTeam'
 import { fetchPokemons } from './services/pokemonService'
-
+import Favorites from './pages/Favorites'
+import WhoIsThatPokemon from './pages/WhoIsThatPokemon'
 
 // Componente raiz: centraliza estados globais e roteamento da aplicação.
 function App() {
 
   const [total, setTotal] = useState(0)
-  const [favoritos, setFavoritos] = useState(0)
   const [teams, setTeams] = useState<ITeam[]>([])
   const totalTeams = teams.length
+  const [favoritePokemons, setFavoritePokemons] = useState<IPokemon[]>([])
+  const [pokemons, setPokemons] = useState<IPokemon[]>([])
 
   // Adiciona um pokémon ao time escolhido, respeitando a regra de até 6 por time.
   function handleAddToTeam(pokemon: IPokemon) {
@@ -49,7 +51,7 @@ function App() {
       return
     }
 
-    
+
     const updatedTeams = teams.map(team => {
       if (team.id !== selectedTeam.id) return team
 
@@ -61,17 +63,22 @@ function App() {
     setTeams(updatedTeams)
   }
 
+  //Função para favoritar ou desfavoritar um pokémon, atualizando o estado global de favoritos.
+  function handleFavoritePokemon(pokemon: IPokemon) {
+    setFavoritePokemons((prev) => {
+      const isAlreadyFavorite = prev.some((fav) => fav.number === pokemon.number)
 
-  // Atualiza o contador global de favoritos ao favoritar ou desfavoritar um pokémon.
-  function handleFavorite(isAdd: boolean) {
-    if (isAdd) {
-      setFavoritos((prev) => prev + 1)
-    } else {
-      setFavoritos((prev) => prev - 1)
-    }
+      if (isAlreadyFavorite) {
+        return prev.filter((fav) => fav.number !== pokemon.number)
+      }
+
+      return [...prev, pokemon]
+    })
   }
 
-  const [pokemons, setPokemons] = useState<IPokemon[]>([])
+  useEffect(() => {
+    console.log('FAVORITOS ATUALIZADOS:', favoritePokemons)
+  }, [favoritePokemons])
 
   // Carrega os pokémons da API ao iniciar o app e atualiza os indicadores do dashboard.
   useEffect(() => {
@@ -105,7 +112,7 @@ function App() {
                 element={
                   <DashboardCards
                     total={total}
-                    favoritos={favoritos}
+                    favoritos={favoritePokemons.length}
                     time={totalTeams}
                   />
                 }
@@ -116,13 +123,41 @@ function App() {
                 element={
                   <Pokemons
                     pokemons={pokemons}
-                    onFavorite={handleFavorite}
-                    onAddToTeam={handleAddToTeam} />} />
+                    onFavorite={handleFavoritePokemon}
+                    onAddToTeam={handleAddToTeam}
+                    favoritePokemons={favoritePokemons}
+                  />} />
 
               <Route
                 path="/my-team"
-                element={<MyTeam teams={teams} setTeams={setTeams} />} />
+                element={
+                  <MyTeam
+                    teams={teams}
+                    setTeams={setTeams}
+                  />
+                }
+              />
+
+              <Route
+                path="/favorites"
+                element={
+                  <Favorites
+                    favoritePokemons={favoritePokemons}
+                    onFavorite={handleFavoritePokemon}
+                    onAddToTeam={handleAddToTeam}
+                  />
+                }
+              />
+
+              <Route path="/who-is-that-pokemon"
+                element={
+                  <WhoIsThatPokemon
+                    pokemon={pokemons}
+                  />
+                }
+              />'
             </Routes>
+            
           </section>
 
         </div>

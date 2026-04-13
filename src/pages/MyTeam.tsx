@@ -1,5 +1,6 @@
 import { type Dispatch, type SetStateAction } from "react"
 import type { ITeam } from "../interfaces/ITeam"
+import { typeIcons } from "../utils/typeIcons"
 
 interface MyTeamProps {
     teams: ITeam[]
@@ -75,15 +76,31 @@ function MyTeam({ teams, setTeams }: MyTeamProps) {
                                                 <p className="text-muted mb-0">Nenhum pokémon no time.</p>
                                             ) : (
                                                 team.pokemons.map((pokemon) => (
-                                                    <div key={pokemon.number}
-                                                        className="border rounded p-2 bg-white text-center">
-                                                        <img src={pokemon.image}
+                                                    <div
+                                                        key={pokemon.number}
+                                                        className="border rounded p-2 bg-white text-center"
+                                                    >
+                                                        <img
+                                                            src={pokemon.image}
                                                             alt={pokemon.name}
                                                             className="img-fluid"
+                                                            style={{ maxWidth: "80px", height: "80px", objectFit: "contain" }}
                                                         />
-                                                        <h4 className="h6 mb-0">{pokemon.name}</h4>
 
-                                                        {/* Botão para remover pokémon do time */}
+                                                        <h4 className="h6 mb-2 text-capitalize">{pokemon.name}</h4>
+
+                                                        <div className="d-flex justify-content-center gap-2 flex-wrap mb-2">
+                                                            {pokemon.types.map((type) => (
+                                                                <img
+                                                                    key={type}
+                                                                    src={typeIcons[type]}
+                                                                    alt={type}
+                                                                    title={type}
+                                                                    style={{ width: "20px", height: "20px" }}
+                                                                />
+                                                            ))}
+                                                        </div>
+
                                                         <button
                                                             className="btn btn-outline-danger btn-sm mt-2"
                                                             onClick={() => handleRemovePokemon(team.id, pokemon.number)}
