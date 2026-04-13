@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import type { IPokemon } from "../interfaces/IPokemon";
-
-interface IWhoIsThatPokemonProps {
-    pokemon: IPokemon[]
-}
+import type { IWhoIsThatPokemonProps } from "../interfaces/IWhoIsThatPokemonProps";
 
 function WhoIsThatPokemon({ pokemon }: IWhoIsThatPokemonProps) {
     const [currentPokemon, setCurrentPokemon] = useState<IPokemon | null>(null)
