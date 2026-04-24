@@ -43,6 +43,20 @@ O projeto foi desenvolvido com React + TypeScript + Vite e consome dados da Poke
 	- impede selecionar time inválido;
 	- impede exceder 6 Pokémons no time.
 
+## 🏗️ Arquitetura da Aplicação
+
+A aplicação foi estruturada seguindo o padrão de separação por responsabilidades:
+
+- **components/**: componentes reutilizáveis da interface (cards, sidebar, etc)
+- **pages/**: páginas principais da aplicação (Dashboard, Pokémons, etc)
+- **services/**: camada responsável pela comunicação com a API externa (PokeAPI)
+- **interfaces/**: tipagem dos dados com TypeScript, garantindo segurança e organização
+
+Essa divisão foi adotada para:
+- facilitar a manutenção do código
+- permitir reutilização de componentes
+- melhorar a escalabilidade da aplicação
+
 ### 🧭 Navegação
 - Rotas com React Router:
 	- `/` Dashboard
