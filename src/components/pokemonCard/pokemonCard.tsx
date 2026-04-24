@@ -16,7 +16,7 @@ function PokemonCard({ name, image, types, number, onFavorite, onAddToTeam, isFa
             types,
         })
     }
-    const [inTeam, setInTeam] = useState(false)
+    const [inTeam, setInTeam] = useState<boolean>(false)
 
     // Alterna o estado visual de "no time" e envia os dados do pokémon para inclusão.
     function handleTeamClick() {

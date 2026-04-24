@@ -1,7 +1,31 @@
+.pokemon-card {
+    background-color: var(--surface-bg);
+    color: var(--page-text);
+    border: 1px solid var(--surface-border);
+}
+
+.pokemon-card .list-group-item {
+    background-color: var(--surface-alt-bg) !important;
+    border-color: var(--surface-border) !important;
+    color: var(--page-text);
+}
+
+.pokemon-card .card-body {
+    color: var(--page-text);
+}
+
+.pokemon-card .card-title {
+    color: var(--card-title);
+}
+
+.pokemon-card .card-text {
+    color: var(--card-number);
+}
+
 .card-img-top {
     height: 150px;
     object-fit: contain;
-    background-color: #f2f2f2; /* cinza claro */
+    background-color: var(--card-media-bg);
     padding: 10px;
 }
 
@@ -17,14 +41,15 @@
     font-size: 20px;
     cursor: pointer;
     transition: 0.2s;
+    color: var(--card-action-color);
 }
 
 .icon-btn.favorite {
-    color: red;
+    color: #e63946;
 }
 
 .icon-btn.team {
-    color: #007bff;
+    color: #2b6cb0;
 }
 
 .icon-btn:hover {
@@ -39,7 +64,7 @@
     border-radius: 999px;
     font-size: 12px;
     font-weight: 600;
-    color: white;
+    color: #ffffff;
     text-transform: capitalize;
     transition: transform 0.2s ease;
 }

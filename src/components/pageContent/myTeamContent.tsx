@@ -3,6 +3,7 @@ import Footer from '../footer/footer'
 import Sidebar from '../sidebar/sidebar'
 import type { ITeam } from '../../interfaces/ITeam'
 import { typeIcons } from '../../utils/typeIcons'
+import '../../style/App.css'
 
 interface MyTeamContentProps {
   teams: ITeam[]
@@ -39,7 +40,7 @@ function MyTeamMain({ teams, setTeams }: MyTeamContentProps) {
       <div className="d-flex align-items-center justify-content-between mb-4">
         <h1 className="mb-0">Meus Times</h1>
 
-        <button className="btn btn-primary" onClick={handleCreateTeam}>
+        <button className="btn btn-criarTime" onClick={handleCreateTeam}>
           <i className="bi bi-plus"></i> Criar Time
         </button>
       </div>
