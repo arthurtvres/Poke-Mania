@@ -1,11 +1,16 @@
-import './header.css'
+import '../../style/header.css'
 
-// Cabeçalho fixo da aplicação com identidade visual do projeto.
 function Header() {
   return (
     <header className="text-white p-3 shadow-sm">
       <div className="container-fluid">
-        <h2>PokéMania</h2>
+        <div className="header-brand">
+          <img
+            src="/pokemanialogo.png"
+            alt="Logo PokéMania"
+            className="header-logo"
+          />
+        </div>
       </div>
     </header>
   )

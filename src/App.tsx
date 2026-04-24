@@ -1,21 +1,18 @@
-import './App.css'
+import './style/App.css'
 import { useEffect, useState } from 'react'
 
 import Header from './components/header/header'
-import Sidebar from './components/sidebar/sidebar'
-import DashboardCards from './components/dashboardCards/dashboardCards'
 import type { IPokemon } from './interfaces/IPokemon'
 import type { ITeam } from './interfaces/ITeam'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
 import Pokemons from './pages/Pokemons'
 import MyTeam from './pages/MyTeam'
 import { fetchPokemons } from './services/pokemonService'
 import Favorites from './pages/Favorites'
 import WhoIsThatPokemon from './pages/WhoIsThatPokemon'
 
-// Componente raiz: centraliza estados globais e roteamento da aplicação.
 function App() {
-
   const [total, setTotal] = useState(0)
   const [teams, setTeams] = useState<ITeam[]>([])
   const totalTeams = teams.length
@@ -63,7 +60,7 @@ function App() {
     setTeams(updatedTeams)
   }
 
-  //Função para favoritar ou desfavoritar um pokémon, atualizando o estado global de favoritos.
+  //Função para favoritar ou desfavoritar um pokémon.
   function handleFavoritePokemon(pokemon: IPokemon) {
     setFavoritePokemons((prev) => {
       const isAlreadyFavorite = prev.some((fav) => fav.number === pokemon.number)
@@ -99,68 +96,61 @@ function App() {
     <BrowserRouter>
       <Header />
 
-      <main className="container-fluid">
-        <div className="row">
-
-          <aside className="col-12 col-md-3 col-lg-2 bg-light p-3">
-            <Sidebar />
-          </aside>
-
-          <section className="col-12 col-md-9 col-lg-10 p-4">
-            <Routes>
-              <Route path="/"
-                element={
-                  <DashboardCards
-                    total={total}
-                    favoritos={favoritePokemons.length}
-                    time={totalTeams}
-                  />
-                }
+      <main className="container-fluid p-0">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Dashboard
+                total={total}
+                favoritos={favoritePokemons.length}
+                time={totalTeams}
               />
+            }
+          />
 
-              <Route
-                path="/pokemons"
-                element={
-                  <Pokemons
-                    pokemons={pokemons}
-                    onFavorite={handleFavoritePokemon}
-                    onAddToTeam={handleAddToTeam}
-                    favoritePokemons={favoritePokemons}
-                  />} />
-
-              <Route
-                path="/my-team"
-                element={
-                  <MyTeam
-                    teams={teams}
-                    setTeams={setTeams}
-                  />
-                }
+          <Route
+            path="/pokemons"
+            element={
+              <Pokemons
+                pokemons={pokemons}
+                onFavorite={handleFavoritePokemon}
+                onAddToTeam={handleAddToTeam}
+                favoritePokemons={favoritePokemons}
               />
+            }
+          />
 
-              <Route
-                path="/favorites"
-                element={
-                  <Favorites
-                    favoritePokemons={favoritePokemons}
-                    onFavorite={handleFavoritePokemon}
-                    onAddToTeam={handleAddToTeam}
-                  />
-                }
+          <Route
+            path="/my-team"
+            element={
+              <MyTeam
+                teams={teams}
+                setTeams={setTeams}
               />
+            }
+          />
 
-              <Route path="/who-is-that-pokemon"
-                element={
-                  <WhoIsThatPokemon
-                    pokemon={pokemons}
-                  />
-                }
-              />'
-            </Routes>
-            
-          </section>
+          <Route
+            path="/favorites"
+            element={
+              <Favorites
+                favoritePokemons={favoritePokemons}
+                onFavorite={handleFavoritePokemon}
+                onAddToTeam={handleAddToTeam}
+              />
+            }
+          />
 
-        </div>
+          <Route
+            path="/who-is-that-pokemon"
+            element={
+              <WhoIsThatPokemon
+                pokemon={pokemons}
+              />
+            }
+          />
+        </Routes>
       </main>
     </BrowserRouter>
   )

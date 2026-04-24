@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import './dashboardCards.css'
+import '../../style/dashboardCards.css'
 import type { IDashBoardProps } from "../../interfaces/IDashBoardProps"
 
 // Mostra os principais indicadores resumidos no dashboard.

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './pokemonCard.css'
+import '../../style/pokemonCard.css'
 import type { IPokemonCardProps } from '../../interfaces/IPokemonCardProps'
 import { typeIcons } from '../../utils/typeIcons'
 
