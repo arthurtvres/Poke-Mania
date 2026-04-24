@@ -1,12 +1,17 @@
 import { Link, useLocation } from 'react-router-dom'
 import '../../style/sidebar.css'
 
-// Menu lateral de navegação com destaque automático da rota ativa.
 function Sidebar() {
   const location = useLocation()
 
   return (
     <div className="sidebar">
+
+      {/* LOGO */}
+      <div className="sidebar-logo">
+        <img src="/pokemanialogo.png" alt="PokéMania" />
+      </div>
+
       <ul className="sidebar-menu">
         <li className={location.pathname === '/' ? 'active' : ''}>
           <Link to="/">
@@ -29,20 +34,19 @@ function Sidebar() {
           </Link>
         </li>
 
-         <li className={location.pathname === '/favorites' ? 'active' : ''}>
+        <li className={location.pathname === '/favorites' ? 'active' : ''}>
           <Link to="/favorites">
             <i className="bi bi-heart"></i>
             Favoritos
           </Link>
         </li>
 
-          <li className={location.pathname === '/who-is-that-pokemon' ? 'active' : ''}>
-            <Link to="/who-is-that-pokemon">
-              <i className="bi bi-question-circle"></i>
-              Quem é esse Pokémon?
-            </Link>
-          </li>
-
+        <li className={location.pathname === '/who-is-that-pokemon' ? 'active' : ''}>
+          <Link to="/who-is-that-pokemon">
+            <i className="bi bi-question-circle"></i>
+            Quem é esse Pokémon?
+          </Link>
+        </li>
       </ul>
     </div>
   )

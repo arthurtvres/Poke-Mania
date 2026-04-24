@@ -123,9 +123,9 @@ function PokemonsMain({ pokemons, onFavorite, onAddToTeam, favoritePokemons }: P
 function PokemonsContent(props: PokemonsContentProps) {
   return (
     <div className="d-flex flex-column flex-md-row">
-      <aside className="bg-light p-3 border-end">
-        <Sidebar />
-      </aside>
+      <aside>
+  <Sidebar />
+</aside>
 
       <div className="flex-grow-1 p-4">
         <PokemonsMain {...props} />

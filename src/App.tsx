@@ -1,7 +1,6 @@
 import './style/App.css'
 import { useEffect, useState } from 'react'
 
-import Header from './components/header/header'
 import type { IPokemon } from './interfaces/IPokemon'
 import type { ITeam } from './interfaces/ITeam'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -94,7 +93,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
 
       <main className="container-fluid p-0">
         <Routes>

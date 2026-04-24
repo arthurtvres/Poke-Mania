@@ -43,7 +43,7 @@ function FavoritesMain({ favoritePokemons, onFavorite, onAddToTeam }: FavoritesC
 function FavoritesContent(props: FavoritesContentProps) {
   return (
     <div className="d-flex flex-column flex-md-row">
-      <aside className="bg-light p-3 border-end">
+      <aside>
         <Sidebar />
       </aside>
 

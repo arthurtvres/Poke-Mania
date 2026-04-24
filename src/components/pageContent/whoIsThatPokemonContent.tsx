@@ -105,7 +105,7 @@ function WhoIsThatPokemonMain({ pokemon }: IWhoIsThatPokemonProps) {
 function WhoIsThatPokemonContent(props: IWhoIsThatPokemonProps) {
   return (
     <div className="d-flex flex-column flex-md-row">
-      <aside className="bg-light p-3 border-end">
+      <aside>
         <Sidebar />
       </aside>
 

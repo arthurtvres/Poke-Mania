@@ -24,7 +24,7 @@ function DashboardMain({ total, favoritos, time }: DashboardContentProps) {
 function DashboardContent({ total, favoritos, time }: DashboardContentProps) {
   return (
     <div className="d-flex flex-column flex-md-row">
-      <aside className="bg-light p-3 border-end">
+      <aside>
         <Sidebar />
       </aside>
 
