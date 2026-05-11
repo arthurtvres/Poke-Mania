@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: pokemania
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/pokemania}
+    username: ${DB_USER:pokemania}
+    password: ${DB_PASSWORD:pokemania}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      pool-name: PokemaniaHikariPool
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+    show-sql: false
+
+  flyway:
+    enabled: false
+
+  jackson:
+    serialization:
+      indent-output: true
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    display-request-duration: true
+
+pokemania:
+  seed:
+    enabled: true
+    source: classpath:db/seed/pokemon_seed.json
+  cors:
+    allowed-origins: http://localhost:5173,http://localhost:4173,http://localhost:3000
+
+logging:
+  level:
+    root: INFO
+    com.pucgo.pokemania: DEBUG
+    org.hibernate.SQL: INFO
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(%-5level) [%clr(%15.15t){faint}] %clr(%-40.40logger{39}){cyan} : %msg%n"

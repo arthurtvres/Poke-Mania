@@ -1,25 +1,56 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# ===========================================
+# Poke-Mania — .gitignore raiz
+# ===========================================
 
-node_modules
-dist
-dist-ssr
-*.local
-.env
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Sistema operacional
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# Variáveis de ambiente / segredos
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# IDE
+.idea/
+.vscode/
+*.iml
 *.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.user
+*.swp
+*.swo
+nbproject/
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
+logs/
+
+# Java / Maven (backend)
+backend/target/
+backend/.mvn/
+backend/HELP.md
+backend/dependency-reduced-pom.xml
+*.class
+
+# Node (frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+
+# Docker
+postgres-data/
+
+# Misc
+*.bak
+*.tmp
+*.orig
+
+# IA
+.claude/
